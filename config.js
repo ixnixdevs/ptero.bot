@@ -30,7 +30,9 @@ module.exports = {
         REQUIREMENTS_FILE: "requirements.txt",
         USER_UPLOAD: false,
         MAIN_FILE: "index.js",
-        JARFILE: "jar.jar"
+        JARFILE: "jar.jar",
+        SERVER_JARFILE: "server.jar",
+        VANILLA_VERSION: "latest"
 
     },
     SERVER_LIMITS: {
