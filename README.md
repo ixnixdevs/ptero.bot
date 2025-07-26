@@ -1,1 +1,1 @@
-# ptero.bot
+# ixnix-hosting-bot
