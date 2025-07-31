@@ -7,6 +7,56 @@ const db = new sqlite3.Database(DB_PATH, (err) => {
         console.error('Failed to connect to database:', err.message);
     } else {
         console.log('Connected to SQLite database.');
+
+        // Check if expiration column exists in user_servers table
+        db.get("PRAGMA table_info(user_servers);", (err, row) => {
+            if (err) {
+                console.error('Failed to get table info for user_servers:', err.message);
+                return;
+            }
+            db.all("PRAGMA table_info(user_servers);", (err, columns) => {
+                if (err) {
+                    console.error('Failed to get columns for user_servers:', err.message);
+                    return;
+                }
+                const hasExpiration = columns.some(col => col.name === 'expiration');
+                if (!hasExpiration) {
+                    console.log('Adding expiration column to user_servers table...');
+                    db.run('ALTER TABLE user_servers ADD COLUMN expiration INTEGER', (alterErr) => {
+                        if (alterErr) {
+                            console.error('Failed to add expiration column:', alterErr.message);
+                        } else {
+                            console.log('Expiration column added successfully.');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Check if max_server_limit column exists in user_registrations table
+        db.get("PRAGMA table_info(user_registrations);", (err, row) => {
+            if (err) {
+                console.error('Failed to get table info for user_registrations:', err.message);
+                return;
+            }
+            db.all("PRAGMA table_info(user_registrations);", (err, columns) => {
+                if (err) {
+                    console.error('Failed to get columns for user_registrations:', err.message);
+                    return;
+                }
+                const hasMaxServerLimit = columns.some(col => col.name === 'max_server_limit');
+                if (!hasMaxServerLimit) {
+                    console.log('Adding max_server_limit column to user_registrations table...');
+                    db.run('ALTER TABLE user_registrations ADD COLUMN max_server_limit INTEGER NOT NULL DEFAULT 1', (alterErr) => {
+                        if (alterErr) {
+                            console.error('Failed to add max_server_limit column:', alterErr.message);
+                        } else {
+                            console.log('max_server_limit column added successfully.');
+                        }
+                    });
+                }
+            });
+        });
     }
 });
 
