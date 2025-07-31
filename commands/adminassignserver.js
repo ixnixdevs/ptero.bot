@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require('discord.js');
 const { db } = require('../database');
-const { ADMIN_ROLE_IDS, API_URL_SERVER_CREATE, API_URL_ALLOCATIONS, API_URL_USER_FETCH, API_KEY, SERVER_ENVIRONMENT, SERVER_LIMITS, SERVER_FEATURE_LIMITS, LOG_CHANNEL_ID } = require('../config');
+const { ADMIN_ROLE_IDS, API_URL_SERVER_CREATE, API_URL_ALLOCATIONS, API_URL_USER_FETCH, API_KEY, SERVER_ENVIRONMENT, SERVER_LIMITS, SERVER_FEATURE_LIMITS, LOG_CHANNEL_ID, PANEL_DOMAIN } = require('../config');
 const axios = require('axios');
 
 module.exports = {
@@ -65,7 +65,7 @@ module.exports = {
             let eggDetails = null;
             try {
                 // Fetch nests
-                const nestsResponse = await axios.get('https://ptero.gamingbaeren.de/api/application/nests', {
+                const nestsResponse = await axios.get(`${PANEL_DOMAIN}api/application/nests`, {
                     headers: {
                         'Authorization': `Bearer ${API_KEY}`,
                         'Accept': 'application/vnd.pterodactyl.v1+json',
@@ -78,7 +78,7 @@ module.exports = {
                 let allEggs = [];
                 for (const nest of nests) {
                     const nestId = nest.attributes.id;
-                    const eggsResponse = await axios.get(`https://ptero.gamingbaeren.de/api/application/nests/${nestId}/eggs`, {
+                    const eggsResponse = await axios.get(`${PANEL_DOMAIN}api/application/nests/${nestId}/eggs`, {
                         headers: {
                             'Authorization': `Bearer ${API_KEY}`,
                             'Accept': 'application/json',
