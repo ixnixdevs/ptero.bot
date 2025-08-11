@@ -16,7 +16,7 @@ module.exports = {
     DB_PATH: process.env.DB_PATH || './data.db',
     BOT_STATUS: process.env.BOT_STATUS || 'online', //  'online', 'idle', 'dnd', 'invisible'
     // Admin role IDs allowed to use blacklist command
-    ADMIN_ROLE_IDS: process.env.ADMIN_ROLE_IDS || '', // Replace with actual role IDs
+    ADMIN_ROLE_IDS: ADMIN_ROLE_IDS, // Replace with actual role IDs
     DEBUG_LOGGING: process.env.DEBUG_LOGGING === 'true', // false = keine Logs
     LOG_PREFIX: process.env.LOG_PREFIX || '[LOG]', // Optionaler Prefix für alle Logs,
     SERVER_ENVIRONMENT: {
